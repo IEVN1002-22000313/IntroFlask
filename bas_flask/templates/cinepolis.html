@@ -1,0 +1,87 @@
+{% extends "layout.html" %} {% block container %}
+<div class="container mt-4">
+  <h2>Cinépolis - Control de Boletos</h2>
+
+  {% if error %}
+  <div class="alert alert-danger" role="alert">{{ error }}</div>
+  {% endif %}
+
+  <form action="/cinepolis" method="post">
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre del comprador:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="nombre"
+        name="nombre"
+        value="{{ nombre }}"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="cantidadCompradores" class="form-label"
+        >Cantidad de compradores:</label
+      >
+      <input
+        type="number"
+        min="1"
+        class="form-control"
+        id="cantidadCompradores"
+        name="cantidadCompradores"
+        value="{{ cantidadCompradores }}"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="cantidadBoletos" class="form-label"
+        >Cantidad de boletas a comprar:</label
+      >
+      <input
+        type="number"
+        min="1"
+        class="form-control"
+        id="cantidadBoletos"
+        name="cantidadBoletos"
+        value="{{ cantidadBoletos }}"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">¿Paga con Tarjeta CINECO?</label>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="tarjetaCineco"
+          value="Si"
+        />
+        <label class="form-check-label">Sí (10% desc. adicional)</label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="tarjetaCineco"
+          value="No"
+          checked
+        />
+        <label class="form-check-label">No</label>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Procesar</button>
+  </form>
+
+  {% if totalPagar > 0 %}
+  <div class="mt-4 alert alert-success">
+    <h4>Resumen de la Compra:</h4>
+    <p><strong>Comprador:</strong> {{ nombre }}</p>
+    <p><strong>Boletas compradas:</strong> {{ cantidadBoletos }}</p>
+    <p><strong>Total a pagar:</strong> ${{ "%.2f"|format(totalPagar) }}</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
